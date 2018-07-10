@@ -1,7 +1,8 @@
 <html>
 <head>
   <title>Paperplane demo</title>
-  <script src="./svg.js"></script>
+  <script src="./math.js"></script>//Math.js https://mathjs.org
+  <script src="./svg.js"></script> //SVG.js
   <script>
     // Base 3d coordinates for a paperplane
     const plane_coordinates = {
@@ -11,7 +12,7 @@
       bottom : [0, 6, 0],
       right_back_corner : [-3, 5, 1],
       right_inside_fold : [-1, 6, 2],
-	}
+    }
 
     SVG.on(document, 'DOMContentLoaded', function() {
       var draw = SVG('paperplane');
