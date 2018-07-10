@@ -1,8 +1,15 @@
 <html>
 <head>
-	<title>Paperplane demo</title>
+  <title>Paperplane demo</title>
+  <script src="https://raw.githubusercontent.com/svgdotjs/svg.js/master/dist/svg.min.js"></script>
+  <script>
+    SVG.on(document, 'DOMContentLoaded', function() {
+      var draw = SVG('paperplane');
+      var rect = draw.rect(100, 100);
+    })
+  </script>
 </head>
 <body>
-<script src="https://raw.githubusercontent.com/svgdotjs/svg.js/master/dist/svg.min.js"></script>
+	<div id="paperplane"></div>
 </body>
 </html>
