@@ -1,15 +1,61 @@
 <html>
 <head>
   <title>Paperplane demo</title>
-  <script src="./svg.js"></script>
+  <script src="bezier.js"></script>
+  <script src="svg.js"></script>
   <script>
     SVG.on(document, 'DOMContentLoaded', function() {
+      var scale = 10;
       var draw = SVG('paperplane');
-      var rect = draw.rect(100, 100);
+      var tr1 = draw.polygon('0,0 100,50 50,100').fill('black')
+      var box = document.getElementById('box');
+      var curve = new Bezier(0,0,0 , 500,10,0 , 50,80,10);
+      function project(point) {
+        return point
+      }
+      function normalise(v) {
+        let length = Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+        return {
+          x: v.x / length,
+          y: v.y / length,
+          z: v.z / length
+        }
+      }
+      function add(a, b, scale) {
+        return {
+          x: a.x + b.x * scale,
+          y: a.y + b.y * scale,
+          z: a.z + b.z * scale
+        }
+      }
+      function animate(t) {
+        let der = curve.derivative(t)
+        let norm = curve.normal(t)
+        let derv = normalise(der)
+        let p = curve.get(t)
+
+        let bp = project(p)
+        let fp = project(add(p,derv,10))
+        let tp = project(add(p,norm,10))
+
+        draw.rect(500,100).fill('white')
+        tr1 = draw.polygon(bp.x.toString()+','+bp.y.toString()+' '+fp.x.toString()+','+fp.y.toString()+' '+tp.x.toString()+','+tp.y.toString()).fill('black')
+
+        if (t < 1) {
+          setTimeout(function () {animate(t+0.001);}, 10)
+        }
+      }
+      animate(0)
     })
   </script>
+  <style>
+    body {
+      margin: 0px;
+      padding: 0px;
+    }
+  </style>
 </head>
 <body>
-	<div id="paperplane"></div>
+  <div id="paperplane"></div>
 </body>
 </html>
